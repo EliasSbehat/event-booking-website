@@ -108,6 +108,11 @@
         $(".submit-btn").click(function(){
             addEvent();
         });
+        function formatDate(dateString) {
+            var date = moment(dateString);
+            const formattedDate = date.format("dddd Do [of] MMMM YYYY [at] HH:mm");
+            return formattedDate;
+        }
         function addEvent() {
             const formData = new FormData();
             formData.append('start_date_time', $('input[name="start-date-time"]').val());
@@ -211,7 +216,9 @@
                 ],
                 "columns": [
                     { data: 'title', name: 'title' },
-                    { data: 's_date', name: 's_date' },
+                    { data: 'start_date_time', name: 'start_date_time', render: function(data, type, row) {
+                        return formatDate(data); // Format the date
+                    }},
                     { data: 'action', name: 'action' },
                 ]
             });

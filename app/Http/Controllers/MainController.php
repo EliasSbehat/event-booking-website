@@ -79,11 +79,6 @@ class MainController extends Controller
             ->get();
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('s_date', function($row){
-                $date = Carbon::createFromFormat('Y-m-d H:i:s', $row->start_date_time);
-                $formattedDate = $date->format('l jS \of F Y \a\t H:i');
-                return $formattedDate;
-            })
             ->addColumn('action', function($row){
                 $actionBtn = '<button type="button" class="btn btn-secondary delete-btn" id="'.$row->id.'"><i class="fas fa-trash-can"></i></button><button type="button" class="btn btn-primary edit-btn" id="'.$row->id.'"><i class="fas fa-pen-to-square"></i></button>';
                 return $actionBtn;

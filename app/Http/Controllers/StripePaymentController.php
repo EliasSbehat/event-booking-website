@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Stripe;
+use Carbon\Carbon;
 
 class StripePaymentController extends Controller
 
@@ -73,22 +74,25 @@ class StripePaymentController extends Controller
             $subject = $data->subject;
             $content = $data->content;
 
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $eventData->start_date_time);
+            $formattedDate = $date->format('l jS \of F Y \a\t H:i');
+
             $subject = str_replace("{EventTitle}", $eventData->title, $subject);
             $subject = str_replace("{Name}", $orderData->Customer_name, $subject);
-            $subject = str_replace("{EventDateTime}", $eventData->start_date_time, $subject);
+            $subject = str_replace("{EventDateTime}", $formattedDate, $subject);
             $subject = str_replace("{EventLocation}", $eventData->location, $subject);
             $subject = str_replace("{TotalPrice}", $orderData->Total, $subject);
 
             $eventHtml = '';
             $eventAry = json_decode($orderData->eventData);
             for ($i = 0; $i < count($eventAry); $i++) {
-                $eventHtml .= '<span><small>' . $eventAry[$i]->event_type_value . 'x' . $eventAry[$i]->event_type . '</small></span>&nbsp;&nbsp;&nbsp;';
+                $eventHtml .= '<span><small>' . $eventAry[$i]->event_type_value . ' x ' . $eventAry[$i]->event_type . '</small></span>&nbsp;&nbsp;&nbsp;';
                 $eventHtml .= '<br>';
             }
 
             $content = str_replace("{EventTitle}", $eventData->title, $content);
             $content = str_replace("{Name}", $orderData->Customer_name, $content);
-            $content = str_replace("{EventDateTime}", $eventData->start_date_time, $content);
+            $content = str_replace("{EventDateTime}", $formattedDate, $content);
             $content = str_replace("{EventLocation}", $eventData->location, $content);
             $content = str_replace("{TotalPrice}", $orderData->Total, $content);
             $content = str_replace("{TicketsPurchased}", $eventHtml, $content);

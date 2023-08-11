@@ -77,7 +77,7 @@
                             var eventHtml = '';
                             
                             for (var i = 0; i < eventArray.length; i++) {
-                                eventHtml += '<span><small>' + eventArray[i].event_type_value + 'x' + eventArray[i].event_type + '</small></span>';
+                                eventHtml += '<span><small>' + eventArray[i].event_type_value + ' x ' + eventArray[i].event_type + '</small></span>';
                                 eventHtml += '<br>';
                             }
                             
