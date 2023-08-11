@@ -20,7 +20,11 @@
             </tbody>
         </table>
     </div>
-
+    <script>
+        setTimeout(() => {
+            window.location.href="/";
+        }, 10000);
+    </script>
   
 </body>
 

@@ -21,6 +21,10 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/dashboard', 'details');
     Route::get('/bookings', 'bookings');
     Route::get('/confirmation', 'confirmation');
+    Route::get('/pwdset', 'pwdset');
+    Route::get('/getpwd', 'getpwd');
+    
+    
 
     Route::get('/bookingmng/getBK', 'bookingmngGetBK');
     Route::get('/eventmng/getMS', 'eventGetMS');

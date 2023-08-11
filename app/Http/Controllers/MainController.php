@@ -202,5 +202,26 @@ class MainController extends Controller
         print_r(json_encode($data));
         exit();
     }
+    public function pwdset(Request $request)
+    {
+        DB::table('pwd')->truncate();
+        DB::table('pwd')->insert([
+            'password' => $request->input('password'),
+        ]);
+        echo "success"; exit();
+    }
+    public function getpwd(Request $request)
+    {
+        $data = DB::table('pwd')
+            ->select('*')
+            ->first();
+        if ($data->password==$request->input('password')) {
+            echo "success"; 
+        } else {
+            echo "wrong"; 
+        }
+        exit();
+    }
+    
 
 }

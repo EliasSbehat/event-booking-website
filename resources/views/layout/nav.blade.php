@@ -50,9 +50,49 @@
             <a class="navbar-brand" href="#">
                 Somerset Smartphone Quizzes
             </a>
+            <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#pwd_modal">
+                Password Setting
+            </button>
         </div>
         <!-- Container wrapper -->
     </nav>
+    <div class="modal fade" id="pwd_modal" tabindex="-1" aria-labelledby="requestLabels" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="requestLabels">Set Password</h5>
+                    <!-- <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="mb-4">
+                            <label class="form-label" for="password">Password</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-lg w-50"
+                                id="password"
+                                name="password"
+                            />
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="password">Confirm Password</label>
+                            <input
+                                type="password"
+                                class="form-control form-control-lg w-50"
+                                id="confirm_password"
+                                name="password"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary cancel_btn">Cancel</button>
+                    <!-- <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button> -->
+                    <button type="button" class="btn btn-primary submit-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
   <!-- Navbar -->
 </header>
 <div class="loading">
@@ -74,6 +114,20 @@
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('.submit-btn').click(function(){
+        if ($("#password").val()==$("#confirm_password").val()) {
+            $.get(
+                "/pwdset",
+                {
+                    password: $("#password").val()
+                }, function() {
+                    window.location.reload();
+                }
+            )
+        } else {
+            alert("please confirm the password.");
         }
     });
 </script>

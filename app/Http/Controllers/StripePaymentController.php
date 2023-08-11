@@ -139,7 +139,7 @@ class StripePaymentController extends Controller
         try {
             $OrderID=$_GET['OrderID'];
             $session = $stripe->checkout->sessions->retrieve($_GET['session_id']);
-            $email= $session->customer_details->email;
+            $email= $_GET['email'];
             $status=$session->status;
             DB::table('bookings')->where('OrderID', $OrderID)->update([
                 'status' => $status
@@ -207,7 +207,7 @@ class StripePaymentController extends Controller
 
             'mode' => 'payment',
             'success_url' => $YOUR_DOMAIN . '/success?OrderID='.$OrderID.'&session_id={CHECKOUT_SESSION_ID}&name='.$name.'&event_id='.$event_id,
-            'cancel_url' => $YOUR_DOMAIN . '/cancel?OrderID='.$OrderID.'&session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => $YOUR_DOMAIN . '/cancel?OrderID='.$OrderID.'&session_id={CHECKOUT_SESSION_ID}&email='.$email,
         ]);
     
         header("HTTP/1.1 303 See Other");
