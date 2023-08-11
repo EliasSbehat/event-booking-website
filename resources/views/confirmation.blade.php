@@ -28,6 +28,15 @@
     </div>
 
     <script>
+        if (sessionStorage.getItem('auth')!='true') {
+            let password = prompt("Please enter your password:");
+            if (password === "password123") {
+                // return true;
+                sessionStorage.setItem('auth', 'true');
+            } else {
+                window.location.href="./";
+            }
+        }
         $(document).ready(function() {
             function getConfirmation() {
                 $.get(

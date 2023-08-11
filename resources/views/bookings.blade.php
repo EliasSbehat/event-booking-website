@@ -38,7 +38,15 @@
 
 
     <script>
-  
+        if (sessionStorage.getItem('auth')!='true') {
+            let password = prompt("Please enter your password:");
+            if (password === "password123") {
+                // return true;
+                sessionStorage.setItem('auth', 'true');
+            } else {
+                window.location.href="./";
+            }
+        }
 		function formatDate(dateString) {
             var date = moment(dateString);
             const formattedDate = date.format("dddd Do [of] MMMM YYYY [at] HH:mm");

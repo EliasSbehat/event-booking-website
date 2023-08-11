@@ -15,7 +15,7 @@
         <table class="table table-bordered event-tbl">
             <tbody id="event_tbody">
                 <tr>
-                    <td>Booking Successful! Wait for 10 seconds before redirecting.</td>
+                    <td>Booking Successful!</td>
                 </tr>
             </tbody>
         </table>
@@ -23,7 +23,7 @@
     <script>
         setTimeout(() => {
             window.location.href="/";
-        }, 3000);
+        }, 10000);
     </script>
   
 </body>

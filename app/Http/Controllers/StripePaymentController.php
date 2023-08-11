@@ -52,7 +52,7 @@ class StripePaymentController extends Controller
             $mail->Port = 587;
 
             //Recipients
-            $mail->setFrom($senderEmail, 'MBD');
+            $mail->setFrom($senderEmail, 'Somerset Smartphone Quizzes');
             $mail->addAddress($recipientEmail, $RecipientName);
             
             

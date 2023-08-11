@@ -17,7 +17,7 @@
                     @endif
                     <i class="fas fa-globe fa-fw me-3"></i><span>Confirmation</span>
                 </a>
-				  @if($status =='bookings')
+				@if($status =='bookings')
                     <a href="/bookings" class="list-group-item list-group-item-action active py-2 ripple">
                     @else
                     <a href="/bookings" class="list-group-item list-group-item-action py-2 ripple">
