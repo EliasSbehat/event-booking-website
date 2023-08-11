@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Lists</title>
+    <title>Lists | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
 </head>
 
@@ -22,6 +22,7 @@
     </div>
 
     <script>
+        
         function getData() {
             $.get(
                 "/eventmng/getData",
@@ -29,15 +30,16 @@
                     if (res) {
                         var eventHTML = "";
                         for (var i=0; i<res.length; i++) {
+                            var date = moment(res[i]['start_date_time']);
+                            const formattedDate = date.format("dddd Do [of] MMMM YYYY [at] HH:mm");
                             eventHTML += `<tr>
                                 <td>
-                                    <b>${res[i]['start_date_time']}</b>
+                                    <b>${formattedDate}</b>
                                     <br>
                                     <h3 style="color:#77A659;">${res[i]['title']}</h3>
                                     <span>${res[i]['location']}</span> <br>
-                                    <p style="color:#77A659;">Themed Quizzes</p>
                                     <div class="mb-4" style="display: flex;gap: 2rem;">
-                                        <img src="./uploads/${res[i]['image']}" width="200" />
+                                        <img src="./uploads/${res[i]['image']}" width="200" style="object-fit: contain;" />
                                         <div>${res[i]['description']}</div>
                                     </div>
                                     <div class="d-flex" style="gap: 1rem;">

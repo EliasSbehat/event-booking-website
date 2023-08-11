@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Buy</title>
+    <title>Buy | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
 </head>
     <script src="https://js.stripe.com/v3/"></script>
@@ -25,10 +25,10 @@
             
         </div>
         <div style="margin-left:2rem;">
-            <p>Price £<span class="price">0.00</span></p>
-            <p>Tax £0.00</p>
+            <p class="d-none">Price £<span class="price">0.00</span></p>
+            <p class="d-none">Tax £0.00</p>
             <p>Total price £<span class="total_price">0.00</span></p>
-            <p>Deposit £<span class="deposit">0.00</span></p>
+            <p class="d-none">Deposit £<span class="deposit">0.00</span></p>
         </div>
         <h4>FILL IN YOUR DETAILS</h4>
 		
@@ -51,13 +51,13 @@
                     <input type="text" id="name" name="name" class="form-control" />
                 </div>
             </div>
-            <div class="mb-4">
+            <!-- <div class="mb-4">
                 <label class="form-label" for="name">Payment method</label>
                 <select class="form-control" id="">
                     <option value="">Credit / Debit Card</option>
                 </select>
-            </div>
-            <div class="d-flex" style="gap:1rem;">
+            </div> -->
+            <div class="d-flex" style="gap:2rem; margin-top: 2rem;margin-bottom: 4rem;">
                 <!--<button type="button" class="btn btn-primary submit-btn">Submit</button>-->
                 <input type="submit" class="btn btn-primary-stripe" value="Submit">
                 <button type="button" class="btn btn-secondary cancel_btn">Cancel</button>
@@ -76,7 +76,9 @@
                     console.log(res);
                     $(".title").html(res[0][0]['title']);
                     $(".title_value").val(res[0][0]['title']);
-                    $(".date").html(res[0][0]['start_date_time']);
+                    var date = moment(res[0][0]['start_date_time']);
+                    const formattedDate = date.format("dddd Do [of] MMMM YYYY [at] HH:mm");
+                    $(".date").html(formattedDate);
                     for (var i=0; i<res[1].length; i++) {
                         $('.prices').append(`
                                 <div>

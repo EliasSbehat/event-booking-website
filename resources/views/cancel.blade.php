@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Canceled !</title>
+    <title>Canceled! | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
 </head>
 
@@ -15,7 +15,7 @@
         <table class="table table-bordered event-tbl">
             <tbody id="event_tbody">
                 <tr>
-                    <td>Payment Canceled Successfully !</td>
+                    <td>Payment Canceled Successfully!</td>
                 </tr>
             </tbody>
         </table>

@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Success !</title>
+    <title>Success! | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
 </head>
 
@@ -15,12 +15,16 @@
         <table class="table table-bordered event-tbl">
             <tbody id="event_tbody">
                 <tr>
-                    <td>Booking Successfull !</td>
+                    <td>Booking Successful! Wait for 10 seconds before redirecting.</td>
                 </tr>
             </tbody>
         </table>
     </div>
-
+    <script>
+        setTimeout(() => {
+            window.location.href="/";
+        }, 3000);
+    </script>
   
 </body>
 

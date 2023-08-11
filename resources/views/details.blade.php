@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Details</title>
+    <title>Details | Somerset Smartphone Quizzes</title>
 </head>
 
 <body>
@@ -58,10 +58,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-4 mb-4 p-5 bg-primary text-white rounded">
+                        <!-- <div class="mt-4 mb-4 p-5 bg-primary text-white rounded">
                             <h3>Price and Recurring</h3>
                             <p>You can add different prices for the event. Just click on ADD button and enter new price. You can also set number of available tickets for each group price (e.g. Adult tickets, Children tickets, ...). Also set if the event is recurring or not.</p>
-                        </div>
+                        </div> -->
                         <a class="btn btn-primary add-btn" role="button">Add</a>
                         <table class="table table-striped">
                             <thead>
@@ -93,6 +93,7 @@
             <thead>
                 <tr>
                     <th>Event Title</th>
+                    <th>Event Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -210,6 +211,7 @@
                 ],
                 "columns": [
                     { data: 'title', name: 'title' },
+                    { data: 's_date', name: 's_date' },
                     { data: 'action', name: 'action' },
                 ]
             });

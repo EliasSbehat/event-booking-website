@@ -13,6 +13,7 @@ use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\PaymentIntent;
+use Carbon\Carbon;
 
 class MainController extends Controller
 {
@@ -54,7 +55,8 @@ class MainController extends Controller
     public function bookingmngGetBK()
     {
         $data = DB::table('bookings')
-            ->select('*')
+            ->select('bookings.*', 'events.title')
+            ->leftJoin('events', 'bookings.event_id', '=', 'events.id')
             ->get();
 			//echo '<pre>'; print_r(json_decode($data[0]->eventData)); die;
         return Datatables::of($data)
@@ -77,6 +79,11 @@ class MainController extends Controller
             ->get();
         return Datatables::of($data)
             ->addIndexColumn()
+            ->addColumn('s_date', function($row){
+                $date = Carbon::createFromFormat('Y-m-d H:i:s', $row->start_date_time);
+                $formattedDate = $date->format('l jS \of F Y \a\t H:i');
+                return $formattedDate;
+            })
             ->addColumn('action', function($row){
                 $actionBtn = '<button type="button" class="btn btn-secondary delete-btn" id="'.$row->id.'"><i class="fas fa-trash-can"></i></button><button type="button" class="btn btn-primary edit-btn" id="'.$row->id.'"><i class="fas fa-pen-to-square"></i></button>';
                 return $actionBtn;
