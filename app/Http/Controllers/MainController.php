@@ -92,6 +92,7 @@ class MainController extends Controller
             ->select(DB::raw('title, description, location, image, start_date_time, events.id, sum(`ticket`) as total_ticket'))
             ->leftJoin('price', 'events.id', '=', 'price.event_id')
             ->groupBy('event_id', 'title', 'description', 'location', 'image', 'start_date_time', 'events.id')
+            ->orderBy('start_date_time', 'desc')
             ->get();
         print_r(json_encode($data));
         exit();
