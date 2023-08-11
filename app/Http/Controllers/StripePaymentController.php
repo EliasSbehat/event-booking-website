@@ -110,7 +110,7 @@ class StripePaymentController extends Controller
     }
 	public function success()
     {
-        $stripe = new \Stripe\StripeClient('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');
+        $stripe = new \Stripe\StripeClient('sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it');
         try {
             $OrderID=$_GET['OrderID'];
             $session = $stripe->checkout->sessions->retrieve($_GET['session_id']);
@@ -135,7 +135,7 @@ class StripePaymentController extends Controller
 
 	public function cancel()
     {
-        $stripe = new \Stripe\StripeClient('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');
+        $stripe = new \Stripe\StripeClient('sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it');
         try {
             $OrderID=$_GET['OrderID'];
             $session = $stripe->checkout->sessions->retrieve($_GET['session_id']);
@@ -180,7 +180,7 @@ class StripePaymentController extends Controller
         ]);
 			 
         // require 'vendor/autoload.php';
-        \Stripe\Stripe::setApiKey('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');
+        \Stripe\Stripe::setApiKey('sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it');
         header('Content-Type: application/json');
         $YOUR_DOMAIN = 'https://quizbooking.co.uk';
         $checkout_session = \Stripe\Checkout\Session::create([
