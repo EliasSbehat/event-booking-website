@@ -25,4 +25,13 @@
     
     <script type="text/javascript" src="/assets/libs/js/moment.js"></script>
 
-    <link rel="icon" href="/assets/imgs/discos (logo).png" type="image/png">
+    <link rel="icon" href="/assets/imgs/discos (logo).png" type="image/*">
+    <script>
+        $.get(
+            "/settings/get",{}, function(res){
+                if (res) {
+                    $('link[rel="icon"]').attr('href', '/uploads/website/'+res?.website_image);
+                }
+            },'json'
+        )
+    </script>

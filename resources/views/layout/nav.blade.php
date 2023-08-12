@@ -54,8 +54,7 @@
             </button>
 
             <!-- Brand -->
-            <a class="navbar-brand" href="#">
-                Somerset Smartphone Quizzes
+            <a class="navbar-brand website-title" href="#">
             </a>
         </div>
         <!-- Container wrapper -->
@@ -69,6 +68,15 @@
     </div>
 </div>
 <script>
+    $.get(
+        "/settings/get",{}, function(res){
+            if (res) {
+                $(".website-title").html(res?.website_title);
+            } else {
+                $(".website-title").html('Somerset Smartphone Quizzes');
+            }
+        },'json'
+    )
     var loadingOverlay = document.querySelector('.loading');
     function showLoading(){
         document.activeElement.blur();

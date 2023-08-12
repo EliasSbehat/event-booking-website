@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Canceled! | Somerset Smartphone Quizzes</title>
+    <title>Cancelled! | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
 </head>
 
@@ -15,12 +15,19 @@
         <table class="table table-bordered event-tbl">
             <tbody id="event_tbody">
                 <tr>
-                    <td>Payment Canceled Successfully!</td>
+                    <td>Payment Cancelled Successfully!</td>
                 </tr>
             </tbody>
         </table>
     </div>
     <script>
+        $.get(
+            "/settings/get",{}, function(res){
+                if (res) {
+                    $('title').text('Cancelled! | ' + res?.website_title);
+                }
+            },'json'
+        )
         setTimeout(() => {
             window.location.href="/";
         }, 10000);

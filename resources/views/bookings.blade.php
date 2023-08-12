@@ -53,6 +53,13 @@
                 }
             )
         }
+        $.get(
+            "/settings/get",{}, function(res){
+                if (res) {
+                    $('title').text('Bookings | ' + res?.website_title);
+                }
+            },'json'
+        )
 		function formatDate(dateString) {
             var date = moment(dateString);
             const formattedDate = date.format("dddd Do [of] MMMM YYYY [at] HH:mm");

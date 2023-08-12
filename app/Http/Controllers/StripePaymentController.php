@@ -36,8 +36,15 @@ class StripePaymentController extends Controller
     }
 	public function confirmation_email($recipientEmail, $RecipientName, $event_id, $order_id)
     {
-     
-        $senderEmail = 'quiz@quizbooking.co.uk';
+        $senderEmail = 'quiz@quizbooking.co.uk'; //default
+        $websiteTitle = 'Somerset Smartphone Quizzes';
+        $settingData = DB::table('settings')
+            ->select('*')
+            ->first();
+        if ($settingData) {
+            $senderEmail = $settingData->website_email;
+            $websiteTitle = $settingData->website_title;
+        }
         //require_once base_path("vendor/autoload.php");
         $mail = new PHPMailer(true);
         try {
@@ -52,7 +59,7 @@ class StripePaymentController extends Controller
             $mail->Port = 587;
 
             //Recipients
-            $mail->setFrom($senderEmail, 'Somerset Smartphone Quizzes');
+            $mail->setFrom($senderEmail, $websiteTitle);
             $mail->addAddress($recipientEmail, $RecipientName);
             
             
@@ -70,7 +77,7 @@ class StripePaymentController extends Controller
                 ->select("*")
                 ->where('OrderID', $order_id)
                 ->first();
-            
+            print_r($orderData);die();
             $subject = $data->subject;
             $content = $data->content;
 
@@ -78,10 +85,10 @@ class StripePaymentController extends Controller
             $formattedDate = $date->format('l jS \of F Y \a\t H:i');
 
             $subject = str_replace("{EventTitle}", $eventData->title, $subject);
-            $subject = str_replace("{Name}", $orderData->Customer_name, $subject);
+            // $subject = str_replace("{Name}", $orderData->Customer_name, $subject);
             $subject = str_replace("{EventDateTime}", $formattedDate, $subject);
             $subject = str_replace("{EventLocation}", $eventData->location, $subject);
-            $subject = str_replace("{TotalPrice}", $orderData->Total, $subject);
+            // $subject = str_replace("{TotalPrice}", $orderData->Total, $subject);
 
             $eventHtml = '';
             $eventAry = json_decode($orderData->eventData);
@@ -110,7 +117,14 @@ class StripePaymentController extends Controller
     }
 	public function success()
     {
-        $stripe = new \Stripe\StripeClient('sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it');
+        $secret_key = 'sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it'; //stripe secret key
+        $settingData = DB::table('settings')
+            ->select('*')
+            ->first();
+        if ($settingData) {
+            $secret_key = $settingData->stripe_secret_key;
+        }
+        $stripe = new \Stripe\StripeClient($secret_key);
         try {
             $OrderID=$_GET['OrderID'];
             $session = $stripe->checkout->sessions->retrieve($_GET['session_id']);
@@ -135,7 +149,14 @@ class StripePaymentController extends Controller
 
 	public function cancel()
     {
-        $stripe = new \Stripe\StripeClient('sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it');
+        $secret_key = 'sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it'; //stripe secret key
+        $settingData = DB::table('settings')
+            ->select('*')
+            ->first();
+        if ($settingData) {
+            $secret_key = $settingData->stripe_secret_key;
+        }
+        $stripe = new \Stripe\StripeClient($secret_key);
         try {
             $OrderID=$_GET['OrderID'];
             $session = $stripe->checkout->sessions->retrieve($_GET['session_id']);
@@ -180,7 +201,14 @@ class StripePaymentController extends Controller
         ]);
 			 
         // require 'vendor/autoload.php';
-        \Stripe\Stripe::setApiKey('sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it');
+        $secret_key = 'sk_test_51Nb0Q2ICth3bN2l6NST7mTH01Wuwr2b4nTMDwxk5rccuIO93YUaLD0ShdhCaS3FACVILXAvlubbk15ykYO4WtJac00UXf9f0it'; //stripe secret key
+        $settingData = DB::table('settings')
+            ->select('*')
+            ->first();
+        if ($settingData) {
+            $secret_key = $settingData->stripe_secret_key;
+        }
+        \Stripe\Stripe::setApiKey($secret_key);
         header('Content-Type: application/json');
         $YOUR_DOMAIN = 'https://quizbooking.co.uk';
         $checkout_session = \Stripe\Checkout\Session::create([

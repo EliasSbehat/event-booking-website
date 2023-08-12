@@ -21,6 +21,13 @@
         </table>
     </div>
     <script>
+        $.get(
+            "/settings/get",{}, function(res){
+                if (res) {
+                    $('title').text('Success! | ' + res?.website_title);
+                }
+            },'json'
+        )
         setTimeout(() => {
             window.location.href="/";
         }, 10000);

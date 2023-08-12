@@ -43,6 +43,13 @@
                 }
             )
         }
+        $.get(
+            "/settings/get",{}, function(res){
+                if (res) {
+                    $('title').text('Confirmation | ' + res?.website_title);
+                }
+            },'json'
+        )
         $(document).ready(function() {
             function getConfirmation() {
                 $.get(

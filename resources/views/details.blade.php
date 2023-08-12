@@ -120,6 +120,13 @@
                 }
             )
         }
+        $.get(
+            "/settings/get",{}, function(res){
+                if (res) {
+                    $('title').text('Details | ' + res?.website_title);
+                }
+            },'json'
+        )
         $(".submit-btn").click(function(){
             addEvent();
         });

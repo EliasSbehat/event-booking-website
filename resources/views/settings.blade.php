@@ -62,10 +62,11 @@
                 <div class="mb-4">
                     <label class="form-label" for="website_title">Website Title</label>
                     <input type="text" id="website_title" class="form-control form-control-lg" />
+                    <input type="hidden" id="setting_id" />
                 </div>
                 <div class="mb-4">
                     <label class="form-label" for="website_email">Website Email</label>
-                    <input type="text" id="website_email" class="form-control form-control-lg" />
+                    <input type="email" id="website_email" class="form-control form-control-lg" />
                 </div>
             </div>
             <div class="col-md-6">
@@ -85,8 +86,8 @@
         </div>
         <div class="row">
             <div class="mb-4 col-md-6">
-                <label class="form-label" for="stripe_secret_ket">Stripe Secret Key</label>
-                <input type="text" id="stripe_secret_ket" class="form-control form-control-lg" />
+                <label class="form-label" for="stripe_secret_key">Stripe Secret Key</label>
+                <input type="text" id="stripe_secret_key" class="form-control form-control-lg" />
             </div>
         </div>
     </div>
@@ -122,8 +123,46 @@
             }
         });
         $(document).ready(function() {
+            function getSetting()
+            {
+                $.get(
+                    "/settings/get",{}, function(res){
+                        console.log(res);
+                        if (res) {
+                            $('#website_title').val(res?.website_title);
+                            $('title').text('Settings | ' + res?.website_title);
+                            $('#website_email').val(res?.website_email);
+                            $('#stripe_pub_key').val(res?.stripe_public_key);
+                            $('#stripe_secret_key').val(res?.stripe_secret_key);
+                            $("#img_preview").attr('src', './uploads/website/'+res?.website_image);
+                            $(".delete-img-btn").removeClass("d-none");
+                            $('#setting_id').val(res?.id);
+                        }
+                    },'json'
+                )
+            }
+            getSetting();
             $(".save-btn").click(function(){
+                const formData = new FormData();
+                formData.append('website_title', $('#website_title').val());
+                formData.append('website_email', $('#website_email').val());
+                formData.append('stripe_pub_key', $('#stripe_pub_key').val());
+                formData.append('stripe_secret_key', $('#stripe_secret_key').val());
+                formData.append('id', $('#setting_id').val());
                 
+                formData.append('image', $('#customFile')[0].files[0]);
+                $.ajax({
+                    url: '/settings/add',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response == "success") {
+                            window.location.reload();
+                        }
+                    }
+                });
             });
             $('#customFile').on('change', handleFileSelect);
             function handleFileSelect(event) {

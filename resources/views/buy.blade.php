@@ -68,6 +68,13 @@
     </div>
 
     <script>
+        $.get(
+            "/settings/get",{}, function(res){
+                if (res) {
+                    $('title').text('Buy | ' + res?.website_title);
+                }
+            },'json'
+        )
         function getData() {
             $.get(
                 "/eventmng/getForEdit", {

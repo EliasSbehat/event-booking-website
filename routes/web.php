@@ -24,8 +24,6 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/confirmation', 'confirmation');
     Route::get('/pwdset', 'pwdset');
     Route::get('/getpwd', 'getpwd');
-    
-    
 
     Route::get('/bookingmng/getBK', 'bookingmngGetBK');
     Route::get('/eventmng/getMS', 'eventGetMS');
@@ -33,7 +31,9 @@ Route::controller(MainController::class)->group(function () {
     Route::post('/eventmng/add', 'eventAdd');
     Route::get('/eventmng/getForEdit', 'getEvents');
     Route::get('/eventmng/delete-event', 'deleteEvent');
-
+    
+    Route::post('/settings/add', 'settingAdd');
+    Route::get('/settings/get', 'settingGet');
 
     Route::post('/confirmationmng/saveConfirmation', 'saveConfirmation');
     Route::get('/confirmationmng/getConfirmation', 'getConfirmation');

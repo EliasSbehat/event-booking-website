@@ -111,6 +111,58 @@ class MainController extends Controller
         print_r(json_encode([$eventData, $priceData]));
         exit();
     }
+    public function settingAdd(Request $request)
+    {
+        $id = $request->input('id');
+        $file = $request->file('image');
+        $image = "";
+        if ($file) {
+            //Move Uploaded File
+            $destinationPath = './uploads/website';
+            $file->move($destinationPath, time() . $file->getClientOriginalName());
+            $image = time() . $file->getClientOriginalName();
+            //
+        }
+        $website_title = $request->input('website_title');
+        $website_email = $request->input('website_email');
+        $stripe_pub_key = $request->input('stripe_pub_key');
+        $stripe_secret_key = $request->input('stripe_secret_key');
+        if ($id) {
+            if ($file) {
+                DB::table('settings')->where('id', $id)->update([
+                    'website_title' => $website_title,
+                    'website_email' => $website_email,
+                    'stripe_public_key' => $stripe_pub_key,
+                    'stripe_secret_key' => $stripe_secret_key,
+                    'website_image' => $image
+                ]);
+            } else {
+                DB::table('settings')->where('id', $id)->update([
+                    'website_title' => $website_title,
+                    'website_email' => $website_email,
+                    'stripe_public_key' => $stripe_pub_key,
+                    'stripe_secret_key' => $stripe_secret_key
+                ]);
+            }
+        } else {
+            DB::table('settings')->insert([
+                'website_title' => $website_title,
+                'website_email' => $website_email,
+                'stripe_public_key' => $stripe_pub_key,
+                'stripe_secret_key' => $stripe_secret_key,
+                'website_image' => $image
+            ]);
+        }
+        exit('success');
+    }
+    public function settingGet()
+    {
+        $data = DB::table('settings')
+            ->select('*')
+            ->first();
+        print_r(json_encode($data));
+        exit();
+    }
     public function eventAdd(Request $request)
     {
         $file = $request->file('image');
