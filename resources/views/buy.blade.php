@@ -16,15 +16,15 @@
         <form name="scheckout" id="scheckout" action="/create-checkout-session" method="POST">
 
         <h4>EVENT DETAILS</h4>
-        <div style="margin-left:2rem;">
+        <div>
             <h3 style="color:#77A659;" class="title"></h3>
             <p class="date"></p>
         </div>
         <h4>SELECT TICKET TYPES THAT YOU WANT TO BUY</h4>
-        <div class="prices" style="margin-left:2rem;">
+        <div class="prices">
             
         </div>
-        <div style="margin-left:2rem;">
+        <div>
             <p class="d-none">Price £<span class="price">0.00</span></p>
             <p class="d-none">Tax £0.00</p>
             <p>Total price £<span class="total_price">0.00</span></p>
@@ -37,7 +37,7 @@
 		<input type="hidden" id="event_id" name="event_id" value="{{$event_id}}" />
 		<input type="hidden" class="deposit_input" id="deposit_input" name="deposit_input" value="" />
 		<input type="hidden" class="title_value" id="title_value" name="title_value" value="" />
-        <div class="row" style="margin-left:2rem;">
+        <div class="row">
             <div class="col-md-6">
                 <div class="mb-4">
                     <label class="form-label" for="email">Email</label>
@@ -84,7 +84,7 @@
                                 <div>
                                 <label class="form-label">${res[1][i]['type']}</label><br>
 								<input type="hidden" name="event_type[]" value="${res[1][i]['type']}">
-                                <div class="input-group flex-nowrap">
+                                <div class="input-group flex-nowrap w-50">
                                     <input type="text" name="event_type_value[]"  id="pr" pid="${res[1][i]['price']}" class="form-control" aria-describedby="addon-wrapping" value=0 />
                                     <span class="input-group-text" id="addon-wrapping">x £ ${res[1][i]['price']}</span>
                                 </div><br></div>`);

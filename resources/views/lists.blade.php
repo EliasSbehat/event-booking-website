@@ -38,7 +38,7 @@
                                     <br>
                                     <h3 style="color:#77A659;">${res[i]['title']}</h3>
                                     <span>${res[i]['location']}</span> <br>
-                                    <div class="mb-4" style="display: flex;gap: 2rem;">
+                                    <div class="mb-4 lists-description" style="display: flex;gap: 2rem;">
                                         <img src="./uploads/${res[i]['image']}" width="200" style="object-fit: contain;" />
                                         <div>${res[i]['description']}</div>
                                     </div>

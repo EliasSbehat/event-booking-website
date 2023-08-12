@@ -20,6 +20,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/', 'lists');
     Route::get('/dashboard', 'details');
     Route::get('/bookings', 'bookings');
+    Route::get('/settings', 'settings');
     Route::get('/confirmation', 'confirmation');
     Route::get('/pwdset', 'pwdset');
     Route::get('/getpwd', 'getpwd');
@@ -38,7 +39,6 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/confirmationmng/getConfirmation', 'getConfirmation');
     
     Route::get('/buy/{event_id}', 'buy');
-    Route::get('/checkout', 'checkout');
 });
 
 

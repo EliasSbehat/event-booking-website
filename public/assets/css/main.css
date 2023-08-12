@@ -209,3 +209,12 @@ table.dataTable {
     -o-animation: uil-ring-anim 1s linear infinite;
     animation: uil-ring-anim 1s linear infinite;
 }
+
+.lists-description {
+    flex-direction: unset;
+}
+@media screen and (max-width: 600px) {
+    .lists-description {
+        flex-direction: column;
+    }
+}

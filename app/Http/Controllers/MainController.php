@@ -40,6 +40,10 @@ class MainController extends Controller
     {
         return view('bookings');
     }
+    public function settings()
+    {
+        return view('settings');
+    }
     public function confirmation()
     {
         return view('confirmation');
@@ -48,17 +52,12 @@ class MainController extends Controller
     {
         return view('buy', ['event_id' => $event_id]);
     }
-    public function checkout()
-    {
-        return view('checkout');
-    }
     public function bookingmngGetBK()
     {
         $data = DB::table('bookings')
-            ->select('bookings.*', 'events.title')
+            ->select('bookings.*', 'events.start_date_time')
             ->leftJoin('events', 'bookings.event_id', '=', 'events.id')
             ->get();
-			//echo '<pre>'; print_r(json_decode($data[0]->eventData)); die;
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
@@ -181,6 +180,14 @@ class MainController extends Controller
     {
         $requestData = $request->all();
         $id = $requestData['id'];
+        $data = DB::table('events')
+            ->select('*')
+            ->where('id', $id)
+            ->first();
+        $img = $data->image;
+        if (file_exists('./uploads/' . $img)) {
+            unlink('./uploads/' . $img);
+        }
         DB::table('events')->where('id', '=', $id)->delete();
         DB::table('price')->where('event_id', '=', $id)->delete();
         exit();
