@@ -77,7 +77,6 @@ class StripePaymentController extends Controller
                 ->select("*")
                 ->where('OrderID', $order_id)
                 ->first();
-            print_r($orderData);die();
             $subject = $data->subject;
             $content = $data->content;
 
@@ -85,10 +84,10 @@ class StripePaymentController extends Controller
             $formattedDate = $date->format('l jS \of F Y \a\t H:i');
 
             $subject = str_replace("{EventTitle}", $eventData->title, $subject);
-            // $subject = str_replace("{Name}", $orderData->Customer_name, $subject);
+            $subject = str_replace("{Name}", $orderData->Customer_name, $subject);
             $subject = str_replace("{EventDateTime}", $formattedDate, $subject);
             $subject = str_replace("{EventLocation}", $eventData->location, $subject);
-            // $subject = str_replace("{TotalPrice}", $orderData->Total, $subject);
+            $subject = str_replace("{TotalPrice}", $orderData->Total, $subject);
 
             $eventHtml = '';
             $eventAry = json_decode($orderData->eventData);
