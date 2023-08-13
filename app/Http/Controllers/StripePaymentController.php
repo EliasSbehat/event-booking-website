@@ -41,6 +41,9 @@ class StripePaymentController extends Controller
         $settingData = DB::table('settings')
             ->select('*')
             ->first();
+        $webhookData = DB::table('webhook')
+            ->select('*')
+            ->first();
         if ($settingData) {
             $senderEmail = $settingData->website_email;
             $websiteTitle = $settingData->website_title;
@@ -79,15 +82,8 @@ class StripePaymentController extends Controller
                 ->first();
             $subject = $data->subject;
             $content = $data->content;
-
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $eventData->start_date_time);
             $formattedDate = $date->format('l jS \of F Y \a\t H:i');
-
-            $subject = str_replace("{EventTitle}", $eventData->title, $subject);
-            $subject = str_replace("{Name}", $orderData->Customer_name, $subject);
-            $subject = str_replace("{EventDateTime}", $formattedDate, $subject);
-            $subject = str_replace("{EventLocation}", $eventData->location, $subject);
-            $subject = str_replace("{TotalPrice}", $orderData->Total, $subject);
 
             $eventHtml = '';
             $eventAry = json_decode($orderData->eventData);
@@ -95,6 +91,34 @@ class StripePaymentController extends Controller
                 $eventHtml .= '<span><small>' . $eventAry[$i]->event_type_value . ' x ' . $eventAry[$i]->event_type . '</small></span>&nbsp;&nbsp;&nbsp;';
                 $eventHtml .= '<br>';
             }
+            if ($webhookData) {
+                $sendData = `{
+                    'Name': $orderData->Customer_name,
+                    'EventTitle': $eventData->title,
+                    'EventDateTime': $formattedDate,
+                    'EventLocation': $eventData->location,
+                    'TotalPrice': $orderData->Total,
+                    'TicketsPurchased': $eventHtml
+                }`;
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $webhookData->webhook_url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $sendData);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+                $response = curl_exec($ch);
+                if (curl_errno($ch)) {
+                    echo 'Error: ' . curl_error($ch);
+                }
+                curl_close($ch);
+            }
+            $subject = str_replace("{EventTitle}", $eventData->title, $subject);
+            $subject = str_replace("{Name}", $orderData->Customer_name, $subject);
+            $subject = str_replace("{EventDateTime}", $formattedDate, $subject);
+            $subject = str_replace("{EventLocation}", $eventData->location, $subject);
+            $subject = str_replace("{TotalPrice}", $orderData->Total, $subject);
+
 
             $content = str_replace("{EventTitle}", $eventData->title, $content);
             $content = str_replace("{Name}", $orderData->Customer_name, $content);
@@ -132,8 +156,20 @@ class StripePaymentController extends Controller
             DB::table('bookings')->where('OrderID', $OrderID)->update([
                 'status' => $status
             ]);
+            $bookingData = DB::table('bookings')->where('OrderID', $OrderID)->first();
         
             $recipientEmail = $email;
+            if ($bookingData) {
+                
+                $eventsData = json_decode($bookingData->eventData);
+                for ($j=0;$j<count($eventsData);$j++) {
+                    $priceData = DB::table('price')->where('event_id', $bookingData->event_id)->where('type', $eventsData[$j]->event_type)->first();
+                    $updatedTicket = ($priceData->ticket*1)-($eventsData[$j]->event_type_value);
+                    DB::table('price')->where('event_id', $bookingData->event_id)->where('type', $eventsData[$j]->event_type)->update([
+                        'ticket' => $updatedTicket
+                    ]);
+                }
+            }
             $this->confirmation_email($recipientEmail, $_GET['name'], $_GET['event_id'], $OrderID);
 
 
@@ -173,6 +209,8 @@ class StripePaymentController extends Controller
     }
 
     public function stripePostCheckout(Request $request) {
+        $name = 'not set';
+        $email = 'not set';
         $title = $request->post('title_value');
         $name = $request->post('name');
         $email = $request->post('email');
@@ -209,6 +247,7 @@ class StripePaymentController extends Controller
         }
         \Stripe\Stripe::setApiKey($secret_key);
         header('Content-Type: application/json');
+        // $YOUR_DOMAIN = 'http://localhost:8000';
         $YOUR_DOMAIN = 'https://quizbooking.co.uk';
         $checkout_session = \Stripe\Checkout\Session::create([
             /* 'line_items' => [[

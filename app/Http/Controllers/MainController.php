@@ -40,6 +40,10 @@ class MainController extends Controller
     {
         return view('bookings');
     }
+    public function events()
+    {
+        return view('events');
+    }
     public function settings()
     {
         return view('settings');
@@ -90,8 +94,9 @@ class MainController extends Controller
         $data = DB::table('events')
             ->select(DB::raw('title, description, location, image, start_date_time, events.id, sum(`ticket`) as total_ticket'))
             ->leftJoin('price', 'events.id', '=', 'price.event_id')
+            ->where('start_date_time', '>=', now()->toDateString())
             ->groupBy('event_id', 'title', 'description', 'location', 'image', 'start_date_time', 'events.id')
-            ->orderBy('start_date_time', 'desc')
+            ->orderBy('start_date_time', 'asc')
             ->get();
         print_r(json_encode($data));
         exit();
@@ -254,6 +259,23 @@ class MainController extends Controller
         ]);
         echo "success"; exit();
     }
+    public function webhookSave(Request $request)
+    {
+        DB::table('webhook')->truncate();
+        DB::table('webhook')->insert([
+            'webhook_url' => $request->input('webhook_url'),
+        ]);
+        echo "success"; exit();
+    }
+    public function webhookGet(Request $request)
+    {
+        $data = DB::table('webhook')
+            ->select('*')
+            ->first();
+        print_r(json_encode($data));
+        exit();
+    }
+    
     public function getConfirmation(Request $request)
     {
         $data = DB::table('confirmation')

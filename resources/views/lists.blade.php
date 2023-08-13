@@ -12,6 +12,7 @@
         <!-- <h4 class="mb-3">Lists</h4> -->
     </div>
     <div class="container-md">
+        <img src="" alt="No set website image" class="website_image" style="object-fit: contain;width: inherit;" />
         <table class="table table-bordered event-tbl">
             <tbody id="event_tbody">
                 <tr>
@@ -26,6 +27,7 @@
             "/settings/get",{}, function(res){
                 if (res) {
                     $('title').text('Lists | ' + res?.website_title);
+                    $('.website_image').attr('src', '/uploads/website/'+res?.website_image);
                 }
             },'json'
         )
@@ -55,7 +57,9 @@
                                 </td>
                             </tr>`;
                         }
-                        $("#event_tbody").html(eventHTML);
+                        if (res.length>0) {
+                            $("#event_tbody").html(eventHTML);
+                        }
                     }
                 }, 'json'
             );

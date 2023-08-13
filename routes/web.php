@@ -20,6 +20,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/', 'lists');
     Route::get('/dashboard', 'details');
     Route::get('/bookings', 'bookings');
+    Route::get('/events', 'events');
     Route::get('/settings', 'settings');
     Route::get('/confirmation', 'confirmation');
     Route::get('/pwdset', 'pwdset');
@@ -34,6 +35,9 @@ Route::controller(MainController::class)->group(function () {
     
     Route::post('/settings/add', 'settingAdd');
     Route::get('/settings/get', 'settingGet');
+
+    Route::get('/webhook/save', 'webhookSave');
+    Route::get('/webhook/get', 'webhookGet');
 
     Route::post('/confirmationmng/saveConfirmation', 'saveConfirmation');
     Route::get('/confirmationmng/getConfirmation', 'getConfirmation');
