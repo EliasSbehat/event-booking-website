@@ -184,6 +184,7 @@ class MainController extends Controller
         $description = $request->input('description');
         $title = $request->input('title');
         $location = $request->input('location');
+        $webhook = $request->input('webhook');
         $price_data = json_decode($request->input('price_data'));
         
 
@@ -193,6 +194,7 @@ class MainController extends Controller
                     'title' => $title,
                     'description' => $description,
                     'location' => $location,
+                    'webhook' => $webhook,
                     'start_date_time' => $start_date_time,
                     'image' => $image
                 ]);
@@ -201,6 +203,7 @@ class MainController extends Controller
                     'title' => $title,
                     'description' => $description,
                     'location' => $location,
+                    'webhook' => $webhook,
                     'start_date_time' => $start_date_time
                 ]);
             }
@@ -219,6 +222,7 @@ class MainController extends Controller
                 'title' => $title,
                 'description' => $description,
                 'location' => $location,
+                'webhook' => $webhook,
                 'start_date_time' => $start_date_time,
                 'image' => $image
             ]);

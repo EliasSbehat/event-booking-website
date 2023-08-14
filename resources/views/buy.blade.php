@@ -41,14 +41,14 @@
                 <div class="col-md-6">
                     <div class="mb-4">
                         <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" />
+                        <input type="email" id="email" name="email" class="form-control" required />
                     </div>
                 
                 </div>
                 <div class="col-md-6">
                     <div class="mb-4">
                         <label class="form-label" for="name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" />
+                        <input type="text" id="name" name="name" class="form-control" required />
                     </div>
                 </div>
                 <!-- <div class="mb-4">
@@ -92,7 +92,7 @@
                                 <label class="form-label">${res[1][i]['type']}</label><br>
 								<input type="hidden" name="event_type[]" value="${res[1][i]['type']}">
                                 <div class="input-group flex-nowrap w-50">
-                                    <input type="text" name="event_type_value[]"  id="pr" pid="${res[1][i]['price']}" tid="${res[1][i]['ticket']}" class="form-control" aria-describedby="addon-wrapping" value=0 />
+                                    <input type="text" name="event_type_value[]" required id="pr" pid="${res[1][i]['price']}" tid="${res[1][i]['ticket']}" class="form-control" aria-describedby="addon-wrapping" value=0 />
                                     <span class="input-group-text" id="addon-wrapping">x £ ${res[1][i]['price']}</span>
                                 </div><br></div>`);
                     }
@@ -125,15 +125,18 @@
             window.location.href = "/";
         });
         $('.submit-btn').click(function(){
-            var price = $('.total_price').html();
+            var price = $(".deposit_input").val();
             var email = $('#email').val();
             var name = $('#name').val();
             // localStorage.setItem('price', price);
             // localStorage.setItem('email', email);
             // localStorage.setItem('name', name);
             // localStorage.setItem('event_id', $('#event_id').val());
-
-            $("#scheckout").submit();
+            if (email=="" || name=="" || price=='') {
+                alert("Please fill the all fields.");
+            } else {
+                $("#scheckout").submit();
+            }
 
         });
     </script>

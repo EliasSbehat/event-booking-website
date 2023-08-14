@@ -48,6 +48,10 @@
                                     <label class="form-label" for="location">Location</label>
                                     <input type="text" id="location" class="form-control form-control-lg" />
                                 </div>
+                                <div class="mb-4">
+                                    <label class="form-label" for="webhook_url">Webhook URL</label>
+                                    <input type="text" id="webhook_url" class="form-control form-control-lg" />
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="customFile">Image</label>
@@ -142,6 +146,7 @@
             formData.append('id', $('#event_id').val());
             formData.append('title', $('#title').val());
             formData.append('location', $('#location').val());
+            formData.append('webhook', $('#webhook_url').val());
             formData.append('image', $('#customFile')[0].files[0]);
             var price_trs = $('#price_tbody').children();
             var price_ary = [];
@@ -199,6 +204,7 @@
                     $("#description").val(res[0][0]['description']);
                     $("#title").val(res[0][0]['title']);
                     $("#location").val(res[0][0]['location']);
+                    $("#webhook_url").val(res[0][0]['webhook']);
                     $("#img_preview").attr('src', './uploads/'+res[0][0]['image']);
                     $(".delete-img-btn").removeClass("d-none");
                     for (var i=0; i<res[1].length; i++) {

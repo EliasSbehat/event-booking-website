@@ -24,13 +24,13 @@
                     @endif
                     <i class="fas fa-chart-bar fa-fw me-3"></i><span>Bookings</span>
                 </a>
-                @if($status =='events')
+                <!-- @if($status =='events')
                     <a href="/events" class="list-group-item list-group-item-action active py-2 ripple">
                     @else
                     <a href="/events" class="list-group-item list-group-item-action py-2 ripple">
                     @endif
                     <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Events</span>
-                </a>
+                </a> -->
                 @if($status =='settings')
                     <a href="/settings" class="list-group-item list-group-item-action active py-2 ripple">
                     @else

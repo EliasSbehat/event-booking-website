@@ -41,9 +41,9 @@ class StripePaymentController extends Controller
         $settingData = DB::table('settings')
             ->select('*')
             ->first();
-        $webhookData = DB::table('webhook')
-            ->select('*')
-            ->first();
+        // $webhookData = DB::table('webhook')
+        //     ->select('*')
+        //     ->first();
         if ($settingData) {
             $senderEmail = $settingData->website_email;
             $websiteTitle = $settingData->website_title;
@@ -91,27 +91,34 @@ class StripePaymentController extends Controller
                 $eventHtml .= '<span><small>' . $eventAry[$i]->event_type_value . ' x ' . $eventAry[$i]->event_type . '</small></span>&nbsp;&nbsp;&nbsp;';
                 $eventHtml .= '<br>';
             }
-            if ($webhookData) {
-                $sendData = `{
-                    'Name': $orderData->Customer_name,
-                    'EventTitle': $eventData->title,
-                    'EventDateTime': $formattedDate,
-                    'EventLocation': $eventData->location,
-                    'TotalPrice': $orderData->Total,
-                    'TicketsPurchased': $eventHtml
-                }`;
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $webhookData->webhook_url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $sendData);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            if ($eventData->webhook) {
+                $url = $eventData->webhook;
+                $url = str_replace("#!/", "", $url);
+                $data = array(
+                    'Name'=> $orderData->Customer_name,
+                    'EventTitle'=> $eventData->title,
+                    'EventDateTime'=> $formattedDate,
+                    'EventLocation'=> $eventData->location,
+                    'TotalPrice'=> $orderData->Total,
+                    'TicketsPurchased'=> $eventHtml
+                );
+                $dataString = json_encode($data);
 
+                $options = array(
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_HEADER => false,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+                    CURLOPT_POSTFIELDS => $dataString
+                );
+
+                $ch = curl_init($url);
+                curl_setopt_array($ch, $options);
                 $response = curl_exec($ch);
-                if (curl_errno($ch)) {
-                    echo 'Error: ' . curl_error($ch);
-                }
                 curl_close($ch);
+
+                // echo $response;
             }
             $subject = str_replace("{EventTitle}", $eventData->title, $subject);
             $subject = str_replace("{Name}", $orderData->Customer_name, $subject);

@@ -12,7 +12,9 @@
         <!-- <h4 class="mb-3">Lists</h4> -->
     </div>
     <div class="container-md">
-        <img src="" alt="No set website image" class="website_image" style="object-fit: contain;width: inherit;" />
+        <div style="display:flex; justify-content: center;">
+            <img src="" alt="No set website image" class="website_image" style="object-fit: contain;width: 50%;" />
+        </div>
         <table class="table table-bordered event-tbl">
             <tbody id="event_tbody">
                 <tr>
