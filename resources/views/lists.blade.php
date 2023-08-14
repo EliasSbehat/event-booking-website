@@ -13,7 +13,7 @@
     </div>
     <div class="container-md">
         <div style="display:flex; justify-content: center;">
-            <img src="" alt="No set website image" class="website_image" style="object-fit: contain;width: 50%;" />
+            <img src="" alt="No set website image" class="website_image" style="object-fit: contain;" />
         </div>
         <table class="table table-bordered event-tbl">
             <tbody id="event_tbody">

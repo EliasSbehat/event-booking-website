@@ -75,6 +75,10 @@
                 }
             },'json'
         )
+        function formatCurrency(number) {
+            var formattedNumber = parseFloat(number).toFixed(2);
+            return formattedNumber;
+        }
         function getData() {
             $.get(
                 "/eventmng/getForEdit", {
@@ -93,7 +97,7 @@
 								<input type="hidden" name="event_type[]" value="${res[1][i]['type']}">
                                 <div class="input-group flex-nowrap w-50">
                                     <input type="text" name="event_type_value[]" required id="pr" pid="${res[1][i]['price']}" tid="${res[1][i]['ticket']}" class="form-control" aria-describedby="addon-wrapping" value=0 />
-                                    <span class="input-group-text" id="addon-wrapping">x £ ${res[1][i]['price']}</span>
+                                    <span class="input-group-text" id="addon-wrapping">x £ ${ formatCurrency(res[1][i]['price']) }</span>
                                 </div><br></div>`);
                     }
                 }, 'json'
@@ -117,7 +121,7 @@
                 }
             }
             $(".price").html(total_price);
-            $(".total_price").html(total_price);
+            $(".total_price").html(formatCurrency(total_price));
             $(".deposit").html(total_price);
             $(".deposit_input").val(total_price);
         });
