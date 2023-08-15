@@ -16,10 +16,11 @@
         <form name="scheckout" id="scheckout" action="/create-checkout-session" method="POST">
 
             <h4>Event Details</h4>
-            <div>
-                <h3 style="color:#77A659;" class="title"></h3>
-                <p class="date"></p>
+            <div id="event_details">
+                <!-- <h3 style="color:#77A659;" class="title"></h3>
+                <p class="date"></p> -->
             </div>
+            <img src="" alt="" class="img-src">
             <h4>Choose Tickets To Purchase</h4>
             <div class="prices">
                 
@@ -85,11 +86,19 @@
                     event_id: $('#event_id').val()
                 }, function(res) {
                     console.log(res);
-                    $(".title").html(res[0][0]['title']);
-                    $(".title_value").val(res[0][0]['title']);
                     var date = moment(res[0][0]['start_date_time']);
                     const formattedDate = date.format("dddd Do [of] MMMM YYYY [at] HH:mm");
-                    $(".date").html(formattedDate);
+                    var event_detail_html = `<b>${formattedDate}</b>
+                        <br><h3 style="color:#77A659;">${res[0][0]['title']}</h3>
+                        <span style="font-weight: 700;">${res[0][0]['location']}</span> <br>
+                        <div class="lists-description" style="display: flex;gap: 2rem; padding-top: 1.5rem;">
+                            <img src="../uploads/${res[0][0]['image']}" width="200" style="object-fit: contain;" />
+                            <div>${res[0][0]['description']}</div>
+                        </div>`;
+                    // $(".title").html(res[0][0]['title']);
+                    $(".title_value").val(res[0][0]['title']);
+                    $('#event_details').html(event_detail_html);
+                    // $(".date").html(formattedDate);
                     for (var i=0; i<res[1].length; i++) {
                         $('.prices').append(`
                                 <div>
