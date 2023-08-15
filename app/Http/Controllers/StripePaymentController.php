@@ -96,6 +96,7 @@ class StripePaymentController extends Controller
                 $url = str_replace("#!/", "", $url);
                 $data = array(
                     'Name'=> $orderData->Customer_name,
+                    'Email'=>$recipientEmail,
                     'EventTitle'=> $eventData->title,
                     'EventDateTime'=> $formattedDate,
                     'EventLocation'=> $eventData->location,

@@ -47,8 +47,8 @@
                                     <b>${formattedDate}</b>
                                     <br>
                                     <h3 style="color:#77A659;">${res[i]['title']}</h3>
-                                    <span>${res[i]['location']}</span> <br>
-                                    <div class="mb-4 lists-description" style="display: flex;gap: 2rem;">
+                                    <span style="font-weight: 700;">${res[i]['location']}</span> <br>
+                                    <div class="mb-4 lists-description" style="display: flex;gap: 2rem; padding-top: 1.5rem;">
                                         <img src="./uploads/${res[i]['image']}" width="200" style="object-fit: contain;" />
                                         <div>${res[i]['description']}</div>
                                     </div>
