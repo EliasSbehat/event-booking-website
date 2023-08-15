@@ -8,14 +8,14 @@
                     @else
                     <a href="/dashboard" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                     @endif
-                    <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Details</span>
+                    <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Events</span>
                 </a>
                 @if($status =='confirmation')
                     <a href="/confirmation" class="list-group-item list-group-item-action active py-2 ripple">
                     @else
                     <a href="/confirmation" class="list-group-item list-group-item-action py-2 ripple">
                     @endif
-                    <i class="fas fa-globe fa-fw me-3"></i><span>Confirmation</span>
+                    <i class="fas fa-globe fa-fw me-3"></i><span>Email Template</span>
                 </a>
 				@if($status =='bookings')
                     <a href="/bookings" class="list-group-item list-group-item-action active py-2 ripple">

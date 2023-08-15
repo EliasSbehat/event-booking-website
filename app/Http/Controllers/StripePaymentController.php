@@ -88,7 +88,8 @@ class StripePaymentController extends Controller
             $eventHtml = '';
             $eventAry = json_decode($orderData->eventData);
             for ($i = 0; $i < count($eventAry); $i++) {
-                $eventHtml .= '<span><small>' . $eventAry[$i]->event_type_value . ' x ' . $eventAry[$i]->event_type . '</small></span>&nbsp;&nbsp;&nbsp;';
+                $eventHtml .= $eventAry[$i]->event_type_value . ' x ' . $eventAry[$i]->event_type;
+                // $eventHtml .= '<span><small>' . $eventAry[$i]->event_type_value . ' x ' . $eventAry[$i]->event_type . '</small></span>&nbsp;&nbsp;&nbsp;';
                 $eventHtml .= '<br>';
             }
             if ($eventData->webhook) {

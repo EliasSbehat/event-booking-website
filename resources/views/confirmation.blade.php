@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Confirmation | Somerset Smartphone Quizzes</title>
+    <title>Email Template | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
@@ -13,7 +13,7 @@
     @include('layout.nav', ['status' => 'confirmation'])
     
     <div class="text-center pt-4">
-        <h4 class="mb-3">Confirmation</h4>
+        <h4 class="mb-3">Email Template</h4>
     </div>
     <div class="container">
         <hr />
@@ -46,7 +46,7 @@
         $.get(
             "/settings/get",{}, function(res){
                 if (res) {
-                    $('title').text('Confirmation | ' + res?.website_title);
+                    $('title').text('Email Template | ' + res?.website_title);
                 }
             },'json'
         )

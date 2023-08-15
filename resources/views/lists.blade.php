@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Lists | Somerset Smartphone Quizzes</title>
+    <title>Forthcoming Events | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
 </head>
 
@@ -28,7 +28,7 @@
         $.get(
             "/settings/get",{}, function(res){
                 if (res) {
-                    $('title').text('Lists | ' + res?.website_title);
+                    $('title').text('Forthcoming Events | ' + res?.website_title);
                     $('.website_image').attr('src', '/uploads/website/'+res?.website_image);
                 }
             },'json'

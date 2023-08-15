@@ -10,7 +10,7 @@
     @include('layout.nav', ['status' => 'details'])
     
     <div class="text-center pt-4">
-        <h4 class="mb-3">Details</h4>
+        <h4 class="mb-3">Events</h4>
     </div>
     <div class="container">
         <!-- Modal -->

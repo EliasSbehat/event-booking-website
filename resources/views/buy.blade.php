@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.head')
-    <title>Buy | Somerset Smartphone Quizzes</title>
+    <title>Buy Tickets | Somerset Smartphone Quizzes</title>
     <!-- include summernote css/js -->
 </head>
     <script src="https://js.stripe.com/v3/"></script>
@@ -15,12 +15,12 @@
         <p><a href="/"><b><</b> Back to list</a></p>
         <form name="scheckout" id="scheckout" action="/create-checkout-session" method="POST">
 
-            <h4>EVENT DETAILS</h4>
+            <h4>Event Details</h4>
             <div>
                 <h3 style="color:#77A659;" class="title"></h3>
                 <p class="date"></p>
             </div>
-            <h4>SELECT TICKET TYPES THAT YOU WANT TO BUY</h4>
+            <h4>Choose Tickets To Purchase</h4>
             <div class="prices">
                 
             </div>
@@ -30,7 +30,7 @@
                 <p>Total price £<span class="total_price">0.00</span></p>
                 <p class="d-none">Deposit £<span class="deposit">0.00</span></p>
             </div>
-            <h4>FILL IN YOUR DETAILS</h4>
+            <h4>Your Details</h4>
             
             
             
@@ -71,7 +71,7 @@
         $.get(
             "/settings/get",{}, function(res){
                 if (res) {
-                    $('title').text('Buy | ' + res?.website_title);
+                    $('title').text('Buy Tickets | ' + res?.website_title);
                 }
             },'json'
         )
@@ -114,7 +114,7 @@
                 var tqr = $(prs).find('#pr').attr('tid');
                 var quantity = $(prs).find('#pr').val();
                 if ((tqr*1) < (quantity*1)) {
-                    alert('This type tickets exceeds limit.');
+                    alert('Please try reducing the number of tickets');
                     $(prs).find('#pr').val(0);
                 } else {
                     total_price += (pr*quantity);
